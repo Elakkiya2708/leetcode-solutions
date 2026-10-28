@@ -1,37 +1,18 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
     public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> triangle = new ArrayList<>();
-        
-        if (numRows <= 0) {
-            return triangle;
-        }
-        
-        // The first row is always [1]
-        List<Integer> firstRow = new ArrayList<>();
-        firstRow.add(1);
-        triangle.add(firstRow);
-        
-        for (int i = 1; i < numRows; i++) {
-            List<Integer> prevRow = triangle.get(i - 1);
-            List<Integer> currentRow = new ArrayList<>();
+        List<List<Integer>> pascal = new ArrayList<>();
+
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> row = new ArrayList<>(Collections.nCopies(i + 1, 1));
             
-            // The first element of each row is always 1
-            currentRow.add(1);
-            
-            // Each interior element is the sum of the two elements directly above it
             for (int j = 1; j < i; j++) {
-                currentRow.add(prevRow.get(j - 1) + prevRow.get(j));
+                int val = pascal.get(i - 1).get(j - 1) + pascal.get(i - 1).get(j);
+                row.set(j, val);
             }
-            
-            // The last element of each row is always 1
-            currentRow.add(1);
-            
-            triangle.add(currentRow);
+            pascal.add(row);
         }
-        
-        return triangle;
+        return pascal;
     }
 }
